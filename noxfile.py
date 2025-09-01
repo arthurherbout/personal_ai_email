@@ -15,6 +15,15 @@ def format(session):
     session.run("uv", "run", "--all-packages", "ruff", "check", "--fix")
 
 
+@nox.session(name="lint", python=False)
+def lint(session):
+    """
+    Run lint checks only (no auto-fix).
+    """
+    session.log("Linting all files.")
+    session.run("uv", "run", "--all-packages", "ruff", "check", ".")
+
+
 @nox.session(name="test", python=False)
 def test(session):
     """
