@@ -3,19 +3,23 @@ import imaplib
 from .config import IMAP_SERVER, GMAIL_USER, GMAIL_APP_PASSWORD
 from email.header import decode_header
 
+
 class GmailClient:
     """
     Client that connects to Gmail.
     """
-    def __init__(self, user: str = GMAIL_USER, 
-                 password: str = GMAIL_APP_PASSWORD,
-                ):
+
+    def __init__(
+        self,
+        user: str = GMAIL_USER,
+        password: str = GMAIL_APP_PASSWORD,
+    ):
         self.user = user
         self.password = password
         self.imap_server = IMAP_SERVER
 
         self.mail = None
-    
+
     def connect(self) -> GmailClient:
         self.mail = imaplib.IMAP4_SSL(self.imap_server)
         self.mail.login(self.user, self.password)
@@ -25,7 +29,7 @@ class GmailClient:
     def close(self):
         if self.mail:
             self.mail.logout()
-    
+
     def fetch_unseen(self, limit: int = 5) -> list[dict]:
         """
         Fetch unseen emails (latest first).
@@ -33,7 +37,7 @@ class GmailClient:
         status, messages = self.mail.search(None, "UNSEEN")
         if status != "OK":
             return []
-        
+
         email_ids = messages[0].split()
         email_ids = email_ids[-limit:] if limit else email_ids
 
@@ -52,7 +56,9 @@ class GmailClient:
             body = ""
             if msg.is_multipart():
                 for part in msg.walk():
-                    if part.get_content_type() == "text/plain" and not part.get("Content-Disposition"):
+                    if part.get_content_type() == "text/plain" and not part.get(
+                        "Content-Disposition"
+                    ):
                         body = part.get_payload(decode=True).decode(errors="ignore")
                         break
             else:
@@ -62,10 +68,7 @@ class GmailClient:
                     "id": eid.decode(),
                     "from": msg.get("From"),
                     "subject": subject,
-                    "body": body.strip()
+                    "body": body.strip(),
                 }
             )
         return results
-
-
-        
