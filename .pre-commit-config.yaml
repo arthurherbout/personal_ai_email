@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: just-format
+        name: Run just format
+        entry: just format
+        language: system
+        pass_filenames: false
+        
