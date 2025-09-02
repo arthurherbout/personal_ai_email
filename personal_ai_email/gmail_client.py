@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 import email
 import imaplib
 from .config import IMAP_SERVER, GMAIL_USER, GMAIL_APP_PASSWORD
