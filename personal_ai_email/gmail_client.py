@@ -5,7 +5,6 @@ from email.header import decode_header
 from .email import Email
 
 
-
 class GmailClient:
     """
     Client that connects to Gmail.
