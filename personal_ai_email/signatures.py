@@ -1,6 +1,6 @@
 import dspy
 from dspy import Signature
-from constants import EmailCategory
+from personal_ai_email.constants import EmailCategory
 
 
 class EmailClassifierSignature(Signature):
@@ -11,4 +11,7 @@ class EmailClassifierSignature(Signature):
     email = dspy.InputField(
         type=dict, desc="Dictionary with keys: id, sender, subject, body"
     )
-    classification = dspy.OutputField(type=EmailCategory)
+    classification = dspy.OutputField(
+        type=EmailCategory,
+        desc="Must be exactly one of: spam, work, personal, promotion, other",
+    )
