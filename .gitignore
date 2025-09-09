@@ -21,6 +21,7 @@ ENV/
 
 # Jupyter
 .ipynb_checkpoints
+notebooks/
 
 # IDEs/editors
 .vscode/
